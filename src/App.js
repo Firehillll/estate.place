@@ -2,7 +2,18 @@ import logo from './logo.svg';
 import house1 from './house1.png';
 import house2 from './house2.png';
 import './App.css';
-import React, { useState } from 'react';
+import React from 'react';
+
+import { ethers } from "ethers";
+import { useState, } from "react";
+import { chains, providers } from '@web3modal/ethereum'
+import { Web3Modal } from '@web3modal/react'
+import { Web3Button, useAccount, useConnectModal } from '@web3modal/react'
+
+
+// import Home from "./walletConnect.js";
+
+
 //document.body.style = 'background: rgb(200, 245, 245);';
 var buttonTextColor = 'rgb(40, 40, 160)';
 const buttonStyle = {height: "30%", width: '15%', textAlign: 'center', color: buttonTextColor}
@@ -12,6 +23,80 @@ function App() {
   var [address, setAddress] = useState('');
   var [balance, setBalance] = useState(0);
   var [connectText, setConnectText] = useState('Connect Wallet')
+
+
+  // const web3Modal = new Web3Modal({
+  //   network: "goerli",
+  //   theme: "light", // optional, 'dark' / 'light',
+  //   cacheProvider: false, // optional
+  //   providerOptions: {
+  //     binancechainwallet: {
+  //       package: true,
+  //     },
+  //     walletconnect: {
+  //       package: true, // required
+  //       options: {
+  //         infuraId: process.env.INFURA_ID // required
+  //     }
+  //   },
+  //   coinbasewallet: {
+  //     package: true, // Required
+  //     options: {
+  //       appName: "Coinbase", // Required
+  //       infuraId: process.env.INFURA_ID, // Required
+  //       chainId: 4, //4 for Rinkeby, 1 for mainnet (default)
+  //     },
+  //   }
+  //   } // required
+  // });
+  const { isOpen, open, close } = useConnectModal()
+  const { account, isReady } = useAccount()
+
+  const modalConfig = {
+    projectId: "aea7c437e57121b7577af1b36384bd27",
+    theme: 'dark',
+    accentColor: 'default',
+    ethereum: {
+      appName: 'web3Modal',
+      autoConnect: true,
+      chains: [
+        chains.mainnet,
+        chains.avalanche,
+        chains.polygon,
+        chains.binanceSmartChain,
+        chains.fantom,
+        chains.arbitrum,
+        chains.optimism
+      ],
+      providers: [providers.walletConnectProvider({ projectId: "aea7c437e57121b7577af1b36384bd27" })]
+    }
+  }
+
+  const providerOptions = {
+    binancechainwallet: {
+      package: true,
+    },
+    // walletconnect: {
+    //   package: WalletConnect, 
+    //   options: {
+    //     infuraId: process.env.INFURA_ID 
+    // }
+    // }
+  }
+  
+  const [connectedAccount, setConnectedAccount] = useState("");
+
+  // const connectWeb3Wallet = async () => {
+  //   try {
+  //     const web3Provider = await Web3Modal.connect();
+  //     const library = new ethers.providers.Web3Provider(web3Provider);
+  //     const web3Accounts = await library.listAccounts();
+  //     const network = await library.getNetwork();
+  //     setConnectedAccount(web3Accounts[0]);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   return(
   <div>
@@ -46,18 +131,31 @@ function App() {
                       <button style={buttonStyle} onClick = {()=> setPage('marketplace')}> Marketplace </button>
                       <button style={buttonStyle} onClick = {()=> setPage('listProperty')}> List Property </button>
                       <button style={buttonStyle} onClick = {()=> setPage('community')}> Community </button>
-                      <button style={buttonStyle} onClick = {()=>{
-                        if (window.ethereum){
-                          //mm installed
-                          window.ethereum.request({method: 'eth_requestAccounts'}).then(result => {
-                            setAddress(result[0]);
-                            setConnectText('Metamask Connected')
-                            //getuserbalance(address)
-                          })
-                        } else {
-                          //Error handling
-                        }
-                      }}> {connectText} </button>
+                      { <button style={buttonStyle} onClick = {()=>{
+                        if (!account.isConnected)
+                          open();
+
+                      //  if (isOpen) {
+                      //   close();
+                      //  } else {
+                      //   open();
+                      //  }
+                      }
+                        //()=>{
+                        // connectWeb3Wallet();
+                        //  if (window.ethereum){
+                        //    //mm installed
+                        //   window.ethereum.request({method: 'eth_requestAccounts'}).then(result => {
+                        //      setAddress(result[0]);
+                        //      setConnectText('Metamask Connected')
+                        //      //getuserbalance(address)
+                        //    })
+                        //  } else {
+                        //    //Error handling
+                        //  }
+                      // }
+                      }> {account.isConnected?"Disconnect: " +account.address.slice(0,6) : connectText} </button> }
+                      <Web3Modal config={modalConfig} />
                       {address === '' ? <div> </div> : <button style={buttonStyle} onClick = {()=> setPage('properties')}> My Properties </button>}
                     </div>
                     <div className='fillerRight' style={{width: '5%', height: "100%", backgroundColor: 'transparent', display: "flex"}}> </div>
