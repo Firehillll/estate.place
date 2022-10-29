@@ -2,7 +2,6 @@ import logo from './logo.svg';
 import house1 from './house1.png';
 import house2 from './house2.png';
 import './App.css';
-import { Link } from '@mui/material';
 import React, { useState } from 'react';
 //document.body.style = 'background: rgb(200, 245, 245);';
 var buttonTextColor = 'rgb(40, 40, 160)';
