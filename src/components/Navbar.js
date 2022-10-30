@@ -1,6 +1,7 @@
 import { Web3Modal } from '@web3modal/react'
 import { Web3Button, useAccount, useConnectModal } from '@web3modal/react'
 import { chains, providers } from '@web3modal/ethereum'
+import { useDisconnect } from '@web3modal/react'
 
 import {
   BrowserRouter as Router,
@@ -25,6 +26,7 @@ const [currAddress, updateAddress] = useState('0x');
 
 const { isOpen, open, close } = useConnectModal()
 const { account, isReady } = useAccount()
+const disconnect = useDisconnect()
 
 // Wallet connect
 const { address, isConnected } = useAccount()
@@ -95,7 +97,11 @@ const modalConfig = {
                 <button className="enableEthereumButton bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-sm"
                         onClick = {()=>{
                         if (!account.isConnected)
-                          open();}}>
+                          open();
+                        else {
+                          disconnect();
+                        }
+                          }}>
                             {account.isConnected?"Disconnect: " +account.address.slice(0,6) : connectText}
                           </button>
                           <Web3Modal config={modalConfig} />

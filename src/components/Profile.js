@@ -1,15 +1,21 @@
 import Navbar from "./Navbar";
+import UseBalance from "./balance";
 import { useLocation, useParams } from 'react-router-dom';
 import MarketplaceJSON from "../Marketplace.json";
 import axios from "axios";
 import { useState } from "react";
 import Properties from "./Properties";
+import { Web3Button, useAccount, useConnectModal } from '@web3modal/react'
+import { useBalance } from '@web3modal/react'
+
 
 export default function Profile () {
     const [data, updateData] = useState([]);
     const [dataFetched, updateFetched] = useState(false);
     const [address, updateAddress] = useState("0x");
     const [totalPrice, updateTotalPrice] = useState("0");
+
+    const { account, isReady } = useAccount()
 
     async function getNFTData(tokenId) {
         const ethers = require("ethers");
@@ -30,7 +36,8 @@ export default function Profile () {
         * Below function takes the metadata from tokenURI and the data returned by getMyNFTs() contract function
         * and creates an object of information that is to be displayed
         */
-        
+
+    
         const items = await Promise.all(transaction.map(async i => {
             const tokenURI = await contract.tokenURI(i.tokenId);
             let meta = await axios.get(tokenURI);
@@ -60,6 +67,7 @@ export default function Profile () {
     const tokenId = params.tokenId;
     if(!dataFetched)
         getNFTData(tokenId);
+
     
     return (
         <div className="profileClass" style={{"min-height":"100vh"}}>
@@ -68,7 +76,7 @@ export default function Profile () {
             <div className="flex text-center flex-col mt-11 md:text-2xl text-white">
                 <div className="mb-5">
                     <h2 className="font-bold">Wallet Address</h2>  
-                    {address}
+                    {account.address}
                 </div>
             </div>
             <div className="flex flex-row text-center justify-center mt-10 md:text-2xl text-white">
@@ -78,7 +86,7 @@ export default function Profile () {
                     </div>
                     <div className="ml-20">
                         <h2 className="font-bold">Total Value</h2>
-                        {totalPrice} ETH
+                        {account.isConnected?<UseBalance></UseBalance>: 0}
                     </div>
             </div>
             <div className="flex flex-col text-center items-center mt-11 text-white">
