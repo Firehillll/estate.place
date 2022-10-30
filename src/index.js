@@ -12,6 +12,7 @@ import Marketplace from './components/Marketplace';
 import Newproperty from './components/Newproperty';
 import Profile from './components/Profile';
 import Property from './components/Property';
+import Community from './components/Community';
 import { chains, providers } from '@web3modal/ethereum'
 import { Web3Modal } from '@web3modal/react'
 import { Web3Button, useAccount, useConnectModal } from '@web3modal/react'
@@ -26,6 +27,7 @@ root.render(
         <Route path="/Newproperty" element={<Newproperty />}/>
         <Route path="/Profile" element={<Profile />}/>
         <Route path="/Property/:tokenId" element={<Property />}/>
+        <Route path="/Community" element={<Community />}/>
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

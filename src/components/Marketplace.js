@@ -23,7 +23,7 @@ const sampleData = [
         "address":"0xe81Bf5A757C4f7F82a2F23b1e59bE45c33c5b13",
     },
     {
-        "name": "NFT#3",
+        "name": "Property#3",
         "description": "Property in New York",
         "image":"https://photos.zillowstatic.com/fp/6ca68afb371987fdf1ef4378121736f1-cc_ft_1536.webp",
         "price":"0.03ETH",
@@ -67,15 +67,15 @@ async function getAllNFTs() {
     updateData(items);
 }
 
-if(!dataFetched)
-    getAllNFTs();
+// if(!dataFetched)
+//     getAllNFTs();
 
 return (
     <div>
         <Navbar></Navbar>
         <div className="flex flex-col place-items-center mt-20">
             <div className="md:text-xl font-bold text-white">
-                Top NFTs
+                Top Properties
             </div>
             <div className="flex mt-5 justify-between flex-wrap max-w-screen-xl text-center">
                 {data.map((value, index) => {

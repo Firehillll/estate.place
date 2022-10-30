@@ -14,6 +14,7 @@ import Marketplace from './components/Marketplace';
 import Newproperty from './components/Newproperty';
 import Profile from './components/Profile';
 import Property from './components/Property';
+import Community from './components/Community';
 
 // import Home from "./walletConnect.js";
 
@@ -92,6 +93,7 @@ function App() {
           <Route path="/Newproperty" element={<Newproperty />}/>
           <Route path="/Profile" element={<Profile />}/>
           <Route path="/Property" element={<Property />}/>
+          <Route path="/Community" element={<Community />}/>
         </Routes>
     </div>
 

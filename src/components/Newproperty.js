@@ -14,6 +14,7 @@ export default function Newproperty () {
 //This function uploads the NFT image to IPFS
 async function OnChangeFile(e) {
     var file = e.target.files[0];
+    console.log(file)
     //check for file extension
     try {
         //upload the file to IPFS
@@ -28,7 +29,7 @@ async function OnChangeFile(e) {
     }
 }
 
-//This function uploads the metadata to IPDS
+//This function uploads the metadata to IPFS
 async function uploadMetadataToIPFS() {
     const {name, description, price} = formParams;
     //Make sure that none of the fields are empty

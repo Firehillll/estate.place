@@ -62,7 +62,7 @@ const modalConfig = {
             </div>
             </Link>
           </li>
-          <li className='w-2/6'>
+          <li className='w-2/10'>
             <ul className='lg:flex justify-between font-bold mr-10 text-lg'>
               {location.pathname === "/" ? 
               <li className='border-b-2 hover:pb-0 p-2'>
@@ -82,7 +82,7 @@ const modalConfig = {
                 <Link to="/Newproperty">New Property</Link>
               </li>              
               }              
-              {location.pathname === "/profile" ? 
+              {location.pathname === "/Profile" ? 
               <li className='border-b-2 hover:pb-0 p-2'>
                 <Link to="/Profile">Profile</Link>
               </li>
@@ -90,7 +90,16 @@ const modalConfig = {
               <li className='hover:border-b-2 hover:pb-0 p-2'>
                 <Link to="/Profile">Profile</Link>
               </li>              
-              }  
+              }
+              {location.pathname === "/Community" ? 
+              <li className='border-b-2 hover:pb-0 p-2'>
+                <Link to="/Community">Community</Link>
+              </li>
+              :
+              <li className='hover:border-b-2 hover:pb-0 p-2'>
+                <Link to="/Community">Community</Link>
+              </li>              
+              }   
               <li>
                 <button className="enableEthereumButton bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-sm"
                         onClick = {()=>{
